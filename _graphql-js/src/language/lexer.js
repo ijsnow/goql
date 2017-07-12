@@ -206,6 +206,11 @@ function readToken(lexer: Lexer<*>, prev: Token): Token {
 
   const code = charCodeAt.call(body, position);
 
+  if (body === '\uFEFF foo') {
+    // eslint-disable-next-line
+    console.log('BOM', code, body)
+  }
+
   // SourceCharacter
   if (code < 0x0020 && code !== 0x0009 && code !== 0x000A && code !== 0x000D) {
     throw syntaxError(

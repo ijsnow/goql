@@ -1,0 +1,1580 @@
+yarn run v0.27.5
+$ npm run lint && npm run check && npm run testonly
+
+> graphql@0.10.3 lint /Users/isaac/ws/src/github.com/ijsnow/goql/_graphql-js
+> eslint src || (printf '\033[33mTry: \033[7m npm run lint -- --fix \033[0m\n' && exit 1)
+
+
+> graphql@0.10.3 check /Users/isaac/ws/src/github.com/ijsnow/goql/_graphql-js
+> flow check
+
+Found 0 errors
+
+> graphql@0.10.3 testonly /Users/isaac/ws/src/github.com/ijsnow/goql/_graphql-js
+> babel-node ./node_modules/.bin/_mocha $npm_package_options_mocha
+
+
+
+  Star Wars Introspection Tests
+    Basic Introspection
+      ✓ Allows querying the schema for types
+      ✓ Allows querying the schema for query type
+      ✓ Allows querying the schema for a specific type
+      ✓ Allows querying the schema for an object kind
+      ✓ Allows querying the schema for an interface kind
+      ✓ Allows querying the schema for object fields
+      ✓ Allows querying the schema for nested object fields
+      ✓ Allows querying the schema for field args
+      ✓ Allows querying the schema for documentation
+
+  Star Wars Query Tests
+    Basic Queries
+      ✓ Correctly identifies R2-D2 as the hero of the Star Wars Saga
+      ✓ Accepts an object with named properties to graphql()
+      ✓ Allows us to query for the ID and friends of R2-D2
+    Nested Queries
+      ✓ Allows us to query for the friends of friends of R2-D2
+    Using IDs and query parameters to refetch objects
+      ✓ Allows us to query for Luke Skywalker directly, using his ID
+      ✓ Allows us to create a generic query, then use it to fetch Luke Skywalker using his ID
+      ✓ Allows us to create a generic query, then use it to fetch Han Solo using his ID
+      ✓ Allows us to create a generic query, then pass an invalid ID to get null back
+    Using aliases to change the key in the response
+      ✓ Allows us to query for Luke, changing his key with an alias
+      ✓ Allows us to query for both Luke and Leia, using two root fields and an alias
+    Uses fragments to express more complex queries
+      ✓ Allows us to query using duplicated content
+      ✓ Allows us to use a fragment to avoid duplicating content
+    Using __typename to find the type of an object
+      ✓ Allows us to verify that R2-D2 is a droid
+      ✓ Allows us to verify that Luke is a human
+    Reporting errors raised in resolvers
+      ✓ Correctly reports error on accessing secretBackstory
+      ✓ Correctly reports error on accessing secretBackstory in a list
+      ✓ Correctly reports error on accessing through an alias
+
+  Star Wars Validation Tests
+    Basic Queries
+      ✓ Validates a complex but valid query
+      ✓ Notes that non-existent fields are invalid
+      ✓ Requires fields on objects
+      ✓ Disallows fields on scalars
+      ✓ Disallows object fields on interfaces
+      ✓ Allows object fields in fragments
+      ✓ Allows object fields in inline fragments
+
+  GraphQLError
+    ✓ is a class and is a subclass of Error
+    ✓ has a name, message, and stack trace
+    ✓ uses the stack of an original error
+    ✓ creates new stack if original error has no stack
+    ✓ converts nodes to positions and locations
+    ✓ converts node with loc.start === 0 to positions and locations
+    ✓ converts source and positions to locations
+    ✓ serializes to include message
+    ✓ serializes to include message and locations
+    ✓ serializes to include path
+    ✓ default error formatter includes path
+
+  Execute: Handles execution of abstract types with promises
+    ✓ isTypeOf used to resolve runtime type for Interface
+    ✓ isTypeOf can be rejected
+    ✓ isTypeOf used to resolve runtime type for Union
+    ✓ resolveType on Interface yields useful error
+    ✓ resolveType on Union yields useful error
+    ✓ resolveType allows resolving with type name
+    ✓ resolveType can be caught
+
+  Execute: Handles execution of abstract types
+    ✓ isTypeOf used to resolve runtime type for Interface
+    ✓ isTypeOf used to resolve runtime type for Union
+    ✓ resolveType on Interface yields useful error
+    ✓ resolveType on Union yields useful error
+    ✓ resolveType allows resolving with type name
+
+  Execute: handles directives
+    works without directives
+      ✓ basic query works
+    works on scalars
+      ✓ if true includes scalar
+      ✓ if false omits on scalar
+      ✓ unless false includes scalar
+      ✓ unless true omits scalar
+    works on fragment spreads
+      ✓ if false omits fragment spread
+      ✓ if true includes fragment spread
+      ✓ unless false includes fragment spread
+      ✓ unless true omits fragment spread
+    works on inline fragment
+      ✓ if false omits inline fragment
+      ✓ if true includes inline fragment
+      ✓ unless false includes inline fragment
+      ✓ unless true includes inline fragment
+    works on anonymous inline fragment
+      ✓ if false omits anonymous inline fragment
+      ✓ if true includes anonymous inline fragment
+      ✓ unless false includes anonymous inline fragment
+      ✓ unless true includes anonymous inline fragment
+    works with skip and include directives
+      ✓ include and no skip
+      ✓ include and skip
+      ✓ no include or skip
+
+  Execute: Handles basic execution tasks
+    ✓ throws if no document is provided
+    ✓ throws if no schema is provided
+    ✓ accepts an object with named properties as arguments
+    ✓ executes arbitrary code
+    ✓ merges parallel fragments
+    ✓ provides info about current execution state
+    ✓ threads root value context correctly
+    ✓ correctly threads arguments
+    ✓ nulls out error subtrees
+    ✓ Full response path is included for non-nullable fields
+    ✓ uses the inline operation if no operation name is provided
+    ✓ uses the only operation if no operation name is provided
+    ✓ uses the named operation if operation name is provided
+    ✓ provides error if no operation is provided
+    ✓ errors if no op name is provided with multiple operations
+    ✓ errors if unknown operation name is provided
+    ✓ uses the query schema for queries
+    ✓ uses the mutation schema for mutations
+    ✓ uses the subscription schema for subscriptions
+    ✓ correct field ordering despite execution order
+    ✓ Avoids recursion
+    ✓ does not include illegal fields in output
+    ✓ does not include arguments that were not set
+    ✓ fails when an isTypeOf check is not met
+    ✓ fails to execute a query containing a type definition
+    ✓ uses a custom field resolver
+
+  Execute: Accepts any iterable as list value
+    ✓ Accepts a Set as a List value
+    ✓ Accepts an Generator function as a List value
+    ✓ Accepts function arguments as a List value
+    ✓ Does not accept (Iterable) String-literal as a List value
+
+  Execute: Handles list nullability
+    [T]
+      Array<T>
+        ✓ Contains values
+        ✓ Contains null
+        ✓ Returns null
+      Promise<Array<T>>
+        ✓ Contains values
+        ✓ Contains null
+        ✓ Returns null
+        ✓ Rejected
+      Array<Promise<T>>
+        ✓ Contains values
+        ✓ Contains null
+        ✓ Contains reject
+    [T]!
+      Array<T>
+        ✓ Contains values
+        ✓ Contains null
+        ✓ Returns null
+      Promise<Array<T>>
+        ✓ Contains values
+        ✓ Contains null
+        ✓ Returns null
+        ✓ Rejected
+      Array<Promise<T>>
+        ✓ Contains values
+        ✓ Contains null
+        ✓ Contains reject
+    [T!]
+      Array<T>
+        ✓ Contains values
+        ✓ Contains null
+        ✓ Returns null
+      Promise<Array<T>>
+        ✓ Contains values
+        ✓ Contains null
+        ✓ Returns null
+        ✓ Rejected
+      Array<Promise<T>>
+        ✓ Contains values
+        ✓ Contains null
+        ✓ Contains reject
+    [T!]!
+      Array<T>
+        ✓ Contains values
+        ✓ Contains null
+        ✓ Returns null
+      Promise<Array<T>>
+        ✓ Contains values
+        ✓ Contains null
+        ✓ Returns null
+        ✓ Rejected
+      Array<Promise<T>>
+        ✓ Contains values
+        ✓ Contains null
+        ✓ Contains reject
+
+  Execute: Handles mutation execution ordering
+    ✓ evaluates mutations serially
+    ✓ evaluates mutations correctly in the presense of a failed mutation
+
+  Execute: handles non-nullable types
+    ✓ nulls a nullable field that throws synchronously
+    ✓ nulls a nullable field that throws in a promise
+    ✓ nulls a synchronously returned object that contains a non-nullable field that throws synchronously
+    ✓ nulls a synchronously returned object that contains a non-nullable field that throws in a promise
+    ✓ nulls an object returned in a promise that contains a non-nullable field that throws synchronously
+    ✓ nulls an object returned in a promise that contains a non-nullable field that throws in a promise
+    ✓ nulls a complex tree of nullable fields that throw
+    ✓ nulls the first nullable object after a field throws in a long chain of fields that are non-null
+    ✓ nulls a nullable field that synchronously returns null
+    ✓ nulls a nullable field that returns null in a promise
+    ✓ nulls a synchronously returned object that contains a non-nullable field that returns null synchronously
+    ✓ nulls a synchronously returned object that contains a non-nullable field that returns null in a promise
+    ✓ nulls an object returned in a promise that contains a non-nullable field that returns null synchronously
+    ✓ nulls an object returned in a promise that contains a non-nullable field that returns null ina a promise
+    ✓ nulls a complex tree of nullable fields that return null
+    ✓ nulls the first nullable object after a field returns null in a long chain of fields that are non-null
+    ✓ nulls the top level if sync non-nullable field throws
+    ✓ nulls the top level if async non-nullable field errors
+    ✓ nulls the top level if sync non-nullable field returns null
+    ✓ nulls the top level if async non-nullable field resolves null
+
+  Execute: resolve function
+    ✓ default function accesses properties
+    ✓ default function calls methods
+    ✓ default function passes args and context
+    ✓ uses provided resolve function
+
+  Execute: Handles execution with a complex schema
+    ✓ executes using a schema
+
+  Execute: Union and intersection types
+    ✓ can introspect on union and intersection types
+    ✓ executes using union types
+    ✓ executes union types with inline fragments
+    ✓ executes using interface types
+    ✓ executes union types with inline fragments
+    ✓ allows fragment conditions to be abstract types
+    ✓ gets execution info in resolver
+
+  Execute: Handles inputs
+    Handles objects and nullability
+      using inline structs
+        ✓ executes with complex input
+        ✓ properly parses single value to list
+        ✓ properly parses null value to null
+        ✓ properly parses null value in list
+        ✓ does not use incorrect value
+        ✓ properly runs parseLiteral on complex scalar types
+      using variables
+        ✓ executes with complex input
+        ✓ uses default value when not provided
+        ✓ properly parses single value to list
+        ✓ executes with complex scalar input
+        ✓ errors on null for nested non-null
+        ✓ errors on incorrect type
+        ✓ errors on omission of nested non-null
+        ✓ errors on deep nested errors and with many errors
+        ✓ errors on addition of unknown input field
+    Handles nullable scalars
+      ✓ allows nullable inputs to be omitted
+      ✓ allows nullable inputs to be omitted in a variable
+      ✓ allows nullable inputs to be omitted in an unlisted variable
+      ✓ allows nullable inputs to be set to null in a variable
+      ✓ allows nullable inputs to be set to a value in a variable
+      ✓ allows nullable inputs to be set to a value directly
+    Handles non-nullable scalars
+      ✓ allows non-nullable inputs to be omitted given a default
+      ✓ does not allow non-nullable inputs to be omitted in a variable
+      ✓ does not allow non-nullable inputs to be set to null in a variable
+      ✓ allows non-nullable inputs to be set to a value in a variable
+      ✓ allows non-nullable inputs to be set to a value directly
+      ✓ reports error for missing non-nullable inputs
+      ✓ reports error for non-provided variables for non-nullable inputs
+    Handles lists and nullability
+      ✓ allows lists to be null
+      ✓ allows lists to contain values
+      ✓ allows lists to contain null
+      ✓ does not allow non-null lists to be null
+      ✓ allows non-null lists to contain values
+      ✓ allows non-null lists to contain null
+      ✓ allows lists of non-nulls to be null
+      ✓ allows lists of non-nulls to contain values
+      ✓ does not allow lists of non-nulls to contain null
+      ✓ does not allow non-null lists of non-nulls to be null
+      ✓ allows non-null lists of non-nulls to contain values
+      ✓ does not allow non-null lists of non-nulls to contain null
+      ✓ does not allow invalid types to be used as values
+      ✓ does not allow unknown types to be used as values
+    Execute: Uses argument default values
+      ✓ when no argument provided
+      ✓ when omitted variable provided
+      ✓ not when argument cannot be coerced
+
+  quotedOrList
+    ✓ Does not accept an empty list
+    ✓ Returns single quoted item
+    ✓ Returns two item list
+    ✓ Returns comma separated many item list
+    ✓ Limits to five items
+
+  suggestionList
+    ✓ Returns results when input is empty
+    ✓ Returns empty array when there are no options
+    ✓ Returns options sorted based on similarity
+
+  Lexer
+    ✓ disallows uncommon control characters
+BOM 102 ﻿ foo
+    ✓ accepts BOM header
+    ✓ records line and column
+    ✓ can be JSON.stringified or util.inspected
+    ✓ skips whitespace and comments
+    ✓ errors respect whitespace
+    ✓ lexes strings
+err { GraphQLError: Syntax Error GraphQL request (1:2) Unterminated string.
+
+1: "
+    ^
+
+    at syntaxError (/Users/isaac/ws/src/github.com/ijsnow/goql/_graphql-js/src/error/syntaxError.js:25:17)
+    at readString (/Users/isaac/ws/src/github.com/ijsnow/goql/_graphql-js/src/language/lexer.js:518:11)
+    at readToken (/Users/isaac/ws/src/github.com/ijsnow/goql/_graphql-js/src/language/lexer.js:278:21)
+    at Object.advanceLexer [as advance] (/Users/isaac/ws/src/github.com/ijsnow/goql/_graphql-js/src/language/lexer.js:44:28)
+    at lexOne (/Users/isaac/ws/src/github.com/ijsnow/goql/_graphql-js/src/language/__tests__/lexer-test.js:17:16)
+    at Context.<anonymous> (/Users/isaac/ws/src/github.com/ijsnow/goql/_graphql-js/src/language/__tests__/lexer-test.js:185:7)
+    at callFn (/Users/isaac/ws/src/github.com/ijsnow/goql/_graphql-js/node_modules/mocha/lib/runnable.js:348:21)
+    at Test.Runnable.run (/Users/isaac/ws/src/github.com/ijsnow/goql/_graphql-js/node_modules/mocha/lib/runnable.js:340:7)
+    at Runner.runTest (/Users/isaac/ws/src/github.com/ijsnow/goql/_graphql-js/node_modules/mocha/lib/runner.js:443:10)
+    at /Users/isaac/ws/src/github.com/ijsnow/goql/_graphql-js/node_modules/mocha/lib/runner.js:549:12
+    at next (/Users/isaac/ws/src/github.com/ijsnow/goql/_graphql-js/node_modules/mocha/lib/runner.js:361:14)
+    at /Users/isaac/ws/src/github.com/ijsnow/goql/_graphql-js/node_modules/mocha/lib/runner.js:371:7
+    at next (/Users/isaac/ws/src/github.com/ijsnow/goql/_graphql-js/node_modules/mocha/lib/runner.js:295:14)
+    at Immediate.<anonymous> (/Users/isaac/ws/src/github.com/ijsnow/goql/_graphql-js/node_modules/mocha/lib/runner.js:339:5)
+    at runCallback (timers.js:800:20)
+    at tryOnImmediate (timers.js:762:5)
+    at processImmediate [as _immediateCallback] (timers.js:733:5)
+  message: 'Syntax Error GraphQL request (1:2) Unterminated string.\n\n1: "\n    ^\n',
+  locations: [ { line: 1, column: 2 } ],
+  path: undefined }
+    ✓ lex reports useful string errors
+    ✓ lexes numbers
+    ✓ lex reports useful number errors
+    ✓ lexes punctuation
+    ✓ lex reports useful unknown character error
+    ✓ lex reports useful information for dashes in names
+    ✓ produces double linked list of tokens, including comments
+
+  Parser
+    ✓ asserts that a source to parse was provided
+    ✓ asserts that a source to parse was provided
+    ✓ parse provides useful errors
+    ✓ parse provides useful error when using source
+    ✓ parses variable inline values
+    ✓ parses constant default values
+    ✓ does not accept fragments named "on"
+    ✓ does not accept fragments spread of "on"
+    ✓ parses multi-byte characters
+    ✓ parses kitchen sink
+    ✓ allows non-keywords anywhere a Name is allowed
+    ✓ parses anonymous mutation operations
+    ✓ parses anonymous subscription operations
+    ✓ parses named mutation operations
+    ✓ parses named subscription operations
+    ✓ creates ast
+    ✓ allows parsing without source location information
+    ✓ contains location information that only stringifys start/end
+    ✓ contains references to source
+    ✓ contains references to start and end tokens
+    parseValue
+      ✓ parses null value
+      ✓ parses list values
+    parseType
+      ✓ parses well known types
+      ✓ parses custom types
+      ✓ parses list types
+      ✓ parses non-null types
+      ✓ parses nested types
+
+  Printer
+    ✓ does not alter ast
+    ✓ prints minimal ast
+    ✓ produces helpful error messages
+    ✓ correctly prints non-query operations without name
+    ✓ prints kitchen sink
+
+  Schema Parser
+    ✓ Simple type
+    ✓ Simple extension
+    ✓ Simple non-null type
+    ✓ Simple type inheriting interface
+    ✓ Simple type inheriting multiple interfaces
+    ✓ Single value enum
+    ✓ Double value enum
+    ✓ Simple interface
+    ✓ Simple field with arg
+    ✓ Simple field with arg with default value
+    ✓ Simple field with list arg
+    ✓ Simple field with two args
+    ✓ Simple union
+    ✓ Union with two types
+    ✓ Union with two types and leading pipe
+    ✓ Union fails with no types
+    ✓ Union fails with leading douple pipe
+    ✓ Union fails with double pipe
+    ✓ Union fails with trailing pipe
+    ✓ Scalar
+    ✓ Simple input object
+    ✓ Simple input object with args should fail
+
+  Printer
+    ✓ prints minimal ast
+    ✓ produces helpful error messages
+    ✓ does not alter ast
+    ✓ prints kitchen sink
+
+  Visitor
+    ✓ allows editing a node both on enter and on leave
+    ✓ allows editing the root node on enter and on leave
+    ✓ allows for editing on enter
+    ✓ allows for editing on leave
+    ✓ visits edited node
+    ✓ allows skipping a sub-tree
+    ✓ allows early exit while visiting
+    ✓ allows early exit while leaving
+    ✓ allows a named functions visitor API
+    ✓ visits kitchen sink
+    visitInParallel
+      ✓ allows skipping a sub-tree
+      ✓ allows skipping different sub-trees
+      ✓ allows early exit while visiting
+      ✓ allows early exit from different points
+      ✓ allows early exit while leaving
+      ✓ allows early exit from leaving different points
+      ✓ allows for editing on enter
+      ✓ allows for editing on leave
+    visitWithTypeInfo
+      ✓ maintains type info during visit
+      ✓ maintains type info during edit
+
+  eventEmitterAsyncIterator
+    ✓ subscribe async-iterator mock
+
+  mapAsyncIterator
+    ✓ maps over async values
+    ✓ maps over async values with async function
+    ✓ allows returning early from async values
+    ✓ passes through early return from async values
+    ✓ allows throwing errors through async generators
+    ✓ passes through caught errors through async generators
+    ✓ closes source if mapper throws an error
+    ✓ closes source if mapper rejects
+
+  Subscribe
+    ✓ accepts an object with named properties as arguments
+    ✓ throws when missing schema
+    ✓ throws when missing document
+    ✓ multiple subscription fields defined in schema
+    ✓ should only resolve the first field of invalid multi-field
+    ✓ produces payload for multiple subscribe in same subscription
+    ✓ produces a payload per subscription event
+    ✓ produces a payload when there are multiple events
+    ✓ should not trigger when subscription is already done
+    ✓ events order is correct when multiple triggered together
+    ✓ invalid query should result in error
+    ✓ throws when subscription definition doesnt return iterator
+    ✓ expects to have subscribe on type definition with iterator
+    ✓ should handle error thrown by subscribe method
+
+  Type System: Example
+    ✓ defines a query only schema
+    ✓ defines a mutation schema
+    ✓ defines a subscription schema
+    ✓ defines an enum type with deprecated value
+    ✓ defines an enum type with a value of `null` and `undefined`
+    ✓ defines an object type with deprecated field
+    ✓ includes nested input objects in the map
+    ✓ includes interfaces' subtypes in the type map
+    ✓ includes interfaces' thunk subtypes in the type map
+    ✓ stringifies simple types
+    ✓ identifies input types
+    ✓ identifies output types
+    ✓ prohibits nesting NonNull inside NonNull
+    ✓ prohibits putting non-Object types in unions
+    ✓ allows a thunk for Union's types
+    ✓ does not mutate passed field definitions
+
+  Type System: Enum Values
+    ✓ accepts enum literals as input
+    ✓ enum may be output type
+    ✓ enum may be both input and output type
+    ✓ does not accept string literals
+    ✓ does not accept incorrect internal value
+    ✓ does not accept internal value in place of enum literal
+    ✓ does not accept enum literal in place of int
+    ✓ accepts JSON string as enum variable
+    ✓ accepts enum literals as input arguments to mutations
+    ✓ accepts enum literals as input arguments to subscriptions
+    ✓ does not accept internal value as enum variable
+    ✓ does not accept string variables as enum input
+    ✓ does not accept internal value variable as enum input
+    ✓ enum value may have an internal value of 0
+    ✓ enum inputs may be nullable
+    ✓ presents a getValues() API for complex enums
+    ✓ presents a getValue() API for complex enums
+    ✓ may be internally represented with complex values
+    ✓ can be introspected without error
+
+  Introspection
+    ✓ executes an introspection query
+    ✓ introspects on input object
+    ✓ supports the __type root field
+    ✓ identifies deprecated fields
+    ✓ respects the includeDeprecated parameter for fields
+    ✓ identifies deprecated enum values
+    ✓ respects the includeDeprecated parameter for enum values
+    ✓ fails as expected on the __type root field without an arg
+    ✓ exposes descriptions on types and fields
+    ✓ exposes descriptions on enums
+
+  Type System: Schema
+    Getting possible types
+      ✓ throws human-reable error if schema.types is not defined
+
+  Type System: Scalar coercion
+    ✓ serializes output int
+    ✓ serializes output float
+    ✓ serializes output strings
+    ✓ serializes output boolean
+
+  Type System: A Schema must have Object root types
+    ✓ accepts a Schema whose query type is an object type
+    ✓ accepts a Schema whose query and mutation types are object types
+    ✓ accepts a Schema whose query and subscription types are object types
+    ✓ rejects a Schema without a query type
+    ✓ rejects a Schema whose query type is an input type
+    ✓ rejects a Schema whose mutation type is an input type
+    ✓ rejects a Schema whose subscription type is an input type
+    ✓ rejects a Schema whose directives are incorrectly typed
+
+  Type System: A Schema must contain uniquely named types
+    ✓ rejects a Schema which redefines a built-in type
+    ✓ rejects a Schema which defines an object type twice
+    ✓ rejects a Schema which have same named objects implementing an interface
+
+  Type System: Objects must have fields
+    ✓ accepts an Object type with fields object
+    ✓ accepts an Object type with a field function
+    ✓ rejects an Object type with missing fields
+    ✓ rejects an Object type field with undefined config
+    ✓ rejects an Object type with incorrectly named fields
+    ✓ warns about an Object type with reserved named fields
+    ✓ rejects an Object type with incorrectly typed fields
+    ✓ rejects an Object type with empty fields
+    ✓ rejects an Object type with a field function that returns nothing
+    ✓ rejects an Object type with a field function that returns empty
+
+  Type System: Fields args must be properly named
+    ✓ accepts field args with valid names
+    ✓ rejects field arg with invalid names
+
+  Type System: Fields args must be objects
+    ✓ accepts an Object type with field args
+    ✓ rejects an Object type with incorrectly typed field args
+
+  Type System: Object interfaces must be array
+    ✓ accepts an Object type with array interfaces
+    ✓ accepts an Object type with interfaces as a function returning an array
+    ✓ rejects an Object type with incorrectly typed interfaces
+    ✓ rejects an Object that declare it implements same interface more than once
+    ✓ rejects an Object type with interfaces as a function returning an incorrect type
+
+  Type System: Union types must be array
+    ✓ accepts a Union type with array types
+    ✓ accepts a Union type with function returning an array of types
+    ✓ rejects a Union type without types
+    ✓ rejects a Union type with empty types
+    ✓ rejects a Union type with incorrectly typed types
+    ✓ rejects a Union type with duplicated member type
+
+  Type System: Input Objects must have fields
+    ✓ accepts an Input Object type with fields
+    ✓ accepts an Input Object type with a field function
+    ✓ rejects an Input Object type with missing fields
+    ✓ rejects an Input Object type with incorrectly typed fields
+    ✓ rejects an Input Object type with empty fields
+    ✓ rejects an Input Object type with a field function that returns nothing
+    ✓ rejects an Input Object type with a field function that returns empty
+
+  Type System: Input Object fields must not have resolvers
+    ✓ accepts an Input Object type with no resolver
+    ✓ accepts an Input Object type with null resolver
+    ✓ accepts an Input Object type with undefined resolver
+    ✓ rejects an Input Object type with resolver function
+    ✓ rejects an Input Object type with resolver constant
+
+  Type System: Object types must be assertable
+    ✓ accepts an Object type with an isTypeOf function
+    ✓ rejects an Object type with an incorrect type for isTypeOf
+
+  Type System: Interface types must be resolvable
+    ✓ accepts an Interface type defining resolveType
+    ✓ accepts an Interface with implementing type defining isTypeOf
+    ✓ accepts an Interface type defining resolveType with implementing type defining isTypeOf
+    ✓ rejects an Interface type with an incorrect type for resolveType
+    ✓ rejects an Interface type not defining resolveType with implementing type not defining isTypeOf
+
+  Type System: Union types must be resolvable
+    ✓ accepts a Union type defining resolveType
+    ✓ accepts a Union of Object types defining isTypeOf
+    ✓ accepts a Union type defining resolveType of Object types defining isTypeOf
+    ✓ rejects an Interface type with an incorrect type for resolveType
+    ✓ rejects a Union type not defining resolveType of Object types not defining isTypeOf
+
+  Type System: Scalar types must be serializable
+    ✓ accepts a Scalar type defining serialize
+    ✓ rejects a Scalar type not defining serialize
+    ✓ rejects a Scalar type defining serialize with an incorrect type
+    ✓ accepts a Scalar type defining parseValue and parseLiteral
+    ✓ rejects a Scalar type defining parseValue but not parseLiteral
+    ✓ rejects a Scalar type defining parseLiteral but not parseValue
+    ✓ rejects a Scalar type defining parseValue and parseLiteral with an incorrect type
+
+  Type System: Enum types must be well defined
+    ✓ accepts a well defined Enum type with empty value definition
+    ✓ accepts a well defined Enum type with internal value definition
+    ✓ rejects an Enum type without values
+    ✓ rejects an Enum type with empty values
+    ✓ rejects an Enum type with incorrectly typed values
+    ✓ rejects an Enum type with missing value definition
+    ✓ rejects an Enum type with incorrectly typed value definition
+    ✓ rejects an Enum type with incorrectly named values
+    ✓ does not allow isDeprecated without deprecationReason on enum
+
+  Type System: Object fields must have output types
+    ✓ accepts an output type as an Object field type: String
+    ✓ accepts an output type as an Object field type: SomeScalar
+    ✓ accepts an output type as an Object field type: SomeEnum
+    ✓ accepts an output type as an Object field type: SomeObject
+    ✓ accepts an output type as an Object field type: SomeUnion
+    ✓ accepts an output type as an Object field type: SomeInterface
+    ✓ accepts an output type as an Object field type: [String]
+    ✓ accepts an output type as an Object field type: [SomeScalar]
+    ✓ accepts an output type as an Object field type: [SomeEnum]
+    ✓ accepts an output type as an Object field type: [SomeObject]
+    ✓ accepts an output type as an Object field type: [SomeUnion]
+    ✓ accepts an output type as an Object field type: [SomeInterface]
+    ✓ accepts an output type as an Object field type: String!
+    ✓ accepts an output type as an Object field type: SomeScalar!
+    ✓ accepts an output type as an Object field type: SomeEnum!
+    ✓ accepts an output type as an Object field type: SomeObject!
+    ✓ accepts an output type as an Object field type: SomeUnion!
+    ✓ accepts an output type as an Object field type: SomeInterface!
+    ✓ accepts an output type as an Object field type: [String]!
+    ✓ accepts an output type as an Object field type: [SomeScalar]!
+    ✓ accepts an output type as an Object field type: [SomeEnum]!
+    ✓ accepts an output type as an Object field type: [SomeObject]!
+    ✓ accepts an output type as an Object field type: [SomeUnion]!
+    ✓ accepts an output type as an Object field type: [SomeInterface]!
+    ✓ rejects an empty Object field type
+    ✓ rejects a non-output type as an Object field type: SomeInputObject
+    ✓ rejects a non-output type as an Object field type: [SomeInputObject]
+    ✓ rejects a non-output type as an Object field type: SomeInputObject!
+    ✓ rejects a non-output type as an Object field type: [SomeInputObject]!
+    ✓ rejects a non-output type as an Object field type: function String() { [native code] }
+
+  Type System: Object fields must have valid resolve values
+    ✓ accepts a lambda as an Object field resolver
+    ✓ rejects an empty Object field resolver
+    ✓ rejects a constant scalar value resolver
+
+  Type System: Objects can only implement interfaces
+    ✓ accepts an Object implementing an Interface
+    ✓ rejects an Object implementing a non-Interface type: SomeScalar
+    ✓ rejects an Object implementing a non-Interface type: SomeEnum
+    ✓ rejects an Object implementing a non-Interface type: SomeObject
+    ✓ rejects an Object implementing a non-Interface type: SomeUnion
+    ✓ rejects an Object implementing a non-Interface type: SomeInputObject
+    ✓ rejects an Object implementing a non-Interface type: [SomeScalar]
+    ✓ rejects an Object implementing a non-Interface type: [SomeEnum]
+    ✓ rejects an Object implementing a non-Interface type: [SomeObject]
+    ✓ rejects an Object implementing a non-Interface type: [SomeUnion]
+    ✓ rejects an Object implementing a non-Interface type: [SomeInputObject]
+    ✓ rejects an Object implementing a non-Interface type: SomeScalar!
+    ✓ rejects an Object implementing a non-Interface type: SomeEnum!
+    ✓ rejects an Object implementing a non-Interface type: SomeObject!
+    ✓ rejects an Object implementing a non-Interface type: SomeUnion!
+    ✓ rejects an Object implementing a non-Interface type: SomeInputObject!
+    ✓ rejects an Object implementing a non-Interface type: [SomeScalar]!
+    ✓ rejects an Object implementing a non-Interface type: [SomeEnum]!
+    ✓ rejects an Object implementing a non-Interface type: [SomeObject]!
+    ✓ rejects an Object implementing a non-Interface type: [SomeUnion]!
+    ✓ rejects an Object implementing a non-Interface type: [SomeInputObject]!
+
+  Type System: Unions must represent Object types
+    ✓ accepts a Union of an Object Type
+    ✓ rejects a Union of a non-Object type: SomeScalar
+    ✓ rejects a Union of a non-Object type: SomeEnum
+    ✓ rejects a Union of a non-Object type: SomeInterface
+    ✓ rejects a Union of a non-Object type: SomeUnion
+    ✓ rejects a Union of a non-Object type: SomeInputObject
+    ✓ rejects a Union of a non-Object type: [SomeScalar]
+    ✓ rejects a Union of a non-Object type: [SomeEnum]
+    ✓ rejects a Union of a non-Object type: [SomeInterface]
+    ✓ rejects a Union of a non-Object type: [SomeUnion]
+    ✓ rejects a Union of a non-Object type: [SomeInputObject]
+    ✓ rejects a Union of a non-Object type: SomeScalar!
+    ✓ rejects a Union of a non-Object type: SomeEnum!
+    ✓ rejects a Union of a non-Object type: SomeInterface!
+    ✓ rejects a Union of a non-Object type: SomeUnion!
+    ✓ rejects a Union of a non-Object type: SomeInputObject!
+    ✓ rejects a Union of a non-Object type: [SomeScalar]!
+    ✓ rejects a Union of a non-Object type: [SomeEnum]!
+    ✓ rejects a Union of a non-Object type: [SomeInterface]!
+    ✓ rejects a Union of a non-Object type: [SomeUnion]!
+    ✓ rejects a Union of a non-Object type: [SomeInputObject]!
+
+  Type System: Interface fields must have output types
+    ✓ accepts an output type as an Interface field type: String
+    ✓ accepts an output type as an Interface field type: SomeScalar
+    ✓ accepts an output type as an Interface field type: SomeEnum
+    ✓ accepts an output type as an Interface field type: SomeObject
+    ✓ accepts an output type as an Interface field type: SomeUnion
+    ✓ accepts an output type as an Interface field type: SomeInterface
+    ✓ accepts an output type as an Interface field type: [String]
+    ✓ accepts an output type as an Interface field type: [SomeScalar]
+    ✓ accepts an output type as an Interface field type: [SomeEnum]
+    ✓ accepts an output type as an Interface field type: [SomeObject]
+    ✓ accepts an output type as an Interface field type: [SomeUnion]
+    ✓ accepts an output type as an Interface field type: [SomeInterface]
+    ✓ accepts an output type as an Interface field type: String!
+    ✓ accepts an output type as an Interface field type: SomeScalar!
+    ✓ accepts an output type as an Interface field type: SomeEnum!
+    ✓ accepts an output type as an Interface field type: SomeObject!
+    ✓ accepts an output type as an Interface field type: SomeUnion!
+    ✓ accepts an output type as an Interface field type: SomeInterface!
+    ✓ accepts an output type as an Interface field type: [String]!
+    ✓ accepts an output type as an Interface field type: [SomeScalar]!
+    ✓ accepts an output type as an Interface field type: [SomeEnum]!
+    ✓ accepts an output type as an Interface field type: [SomeObject]!
+    ✓ accepts an output type as an Interface field type: [SomeUnion]!
+    ✓ accepts an output type as an Interface field type: [SomeInterface]!
+    ✓ rejects an empty Interface field type
+    ✓ rejects a non-output type as an Interface field type: SomeInputObject
+    ✓ rejects a non-output type as an Interface field type: [SomeInputObject]
+    ✓ rejects a non-output type as an Interface field type: SomeInputObject!
+    ✓ rejects a non-output type as an Interface field type: [SomeInputObject]!
+    ✓ rejects a non-output type as an Interface field type: function String() { [native code] }
+
+  Type System: Field arguments must have input types
+    ✓ accepts an input type as a field arg type: String
+    ✓ accepts an input type as a field arg type: SomeScalar
+    ✓ accepts an input type as a field arg type: SomeEnum
+    ✓ accepts an input type as a field arg type: SomeInputObject
+    ✓ accepts an input type as a field arg type: [String]
+    ✓ accepts an input type as a field arg type: [SomeScalar]
+    ✓ accepts an input type as a field arg type: [SomeEnum]
+    ✓ accepts an input type as a field arg type: [SomeInputObject]
+    ✓ accepts an input type as a field arg type: String!
+    ✓ accepts an input type as a field arg type: SomeScalar!
+    ✓ accepts an input type as a field arg type: SomeEnum!
+    ✓ accepts an input type as a field arg type: SomeInputObject!
+    ✓ accepts an input type as a field arg type: [String]!
+    ✓ accepts an input type as a field arg type: [SomeScalar]!
+    ✓ accepts an input type as a field arg type: [SomeEnum]!
+    ✓ accepts an input type as a field arg type: [SomeInputObject]!
+    ✓ rejects an empty field arg type
+    ✓ rejects a non-input type as a field arg type: SomeObject
+    ✓ rejects a non-input type as a field arg type: SomeUnion
+    ✓ rejects a non-input type as a field arg type: SomeInterface
+    ✓ rejects a non-input type as a field arg type: [SomeObject]
+    ✓ rejects a non-input type as a field arg type: [SomeUnion]
+    ✓ rejects a non-input type as a field arg type: [SomeInterface]
+    ✓ rejects a non-input type as a field arg type: SomeObject!
+    ✓ rejects a non-input type as a field arg type: SomeUnion!
+    ✓ rejects a non-input type as a field arg type: SomeInterface!
+    ✓ rejects a non-input type as a field arg type: [SomeObject]!
+    ✓ rejects a non-input type as a field arg type: [SomeUnion]!
+    ✓ rejects a non-input type as a field arg type: [SomeInterface]!
+    ✓ rejects a non-input type as a field arg type: function String() { [native code] }
+
+  Type System: Input Object fields must have input types
+    ✓ accepts an input type as an input field type: String
+    ✓ accepts an input type as an input field type: SomeScalar
+    ✓ accepts an input type as an input field type: SomeEnum
+    ✓ accepts an input type as an input field type: SomeInputObject
+    ✓ accepts an input type as an input field type: [String]
+    ✓ accepts an input type as an input field type: [SomeScalar]
+    ✓ accepts an input type as an input field type: [SomeEnum]
+    ✓ accepts an input type as an input field type: [SomeInputObject]
+    ✓ accepts an input type as an input field type: String!
+    ✓ accepts an input type as an input field type: SomeScalar!
+    ✓ accepts an input type as an input field type: SomeEnum!
+    ✓ accepts an input type as an input field type: SomeInputObject!
+    ✓ accepts an input type as an input field type: [String]!
+    ✓ accepts an input type as an input field type: [SomeScalar]!
+    ✓ accepts an input type as an input field type: [SomeEnum]!
+    ✓ accepts an input type as an input field type: [SomeInputObject]!
+    ✓ rejects an empty input field type
+    ✓ rejects a non-input type as an input field type: SomeObject
+    ✓ rejects a non-input type as an input field type: SomeUnion
+    ✓ rejects a non-input type as an input field type: SomeInterface
+    ✓ rejects a non-input type as an input field type: [SomeObject]
+    ✓ rejects a non-input type as an input field type: [SomeUnion]
+    ✓ rejects a non-input type as an input field type: [SomeInterface]
+    ✓ rejects a non-input type as an input field type: SomeObject!
+    ✓ rejects a non-input type as an input field type: SomeUnion!
+    ✓ rejects a non-input type as an input field type: SomeInterface!
+    ✓ rejects a non-input type as an input field type: [SomeObject]!
+    ✓ rejects a non-input type as an input field type: [SomeUnion]!
+    ✓ rejects a non-input type as an input field type: [SomeInterface]!
+    ✓ rejects a non-input type as an input field type: function String() { [native code] }
+
+  Type System: List must accept GraphQL types
+    ✓ accepts an type as item type of list: String
+    ✓ accepts an type as item type of list: SomeScalar
+    ✓ accepts an type as item type of list: SomeObject
+    ✓ accepts an type as item type of list: SomeUnion
+    ✓ accepts an type as item type of list: SomeInterface
+    ✓ accepts an type as item type of list: SomeEnum
+    ✓ accepts an type as item type of list: SomeInputObject
+    ✓ accepts an type as item type of list: [String]
+    ✓ accepts an type as item type of list: [SomeScalar]
+    ✓ accepts an type as item type of list: [SomeObject]
+    ✓ accepts an type as item type of list: [SomeUnion]
+    ✓ accepts an type as item type of list: [SomeInterface]
+    ✓ accepts an type as item type of list: [SomeEnum]
+    ✓ accepts an type as item type of list: [SomeInputObject]
+    ✓ accepts an type as item type of list: String!
+    ✓ accepts an type as item type of list: SomeScalar!
+    ✓ accepts an type as item type of list: SomeObject!
+    ✓ accepts an type as item type of list: SomeUnion!
+    ✓ accepts an type as item type of list: SomeInterface!
+    ✓ accepts an type as item type of list: SomeEnum!
+    ✓ accepts an type as item type of list: SomeInputObject!
+    ✓ accepts an type as item type of list: [String]!
+    ✓ accepts an type as item type of list: [SomeScalar]!
+    ✓ accepts an type as item type of list: [SomeObject]!
+    ✓ accepts an type as item type of list: [SomeUnion]!
+    ✓ accepts an type as item type of list: [SomeInterface]!
+    ✓ accepts an type as item type of list: [SomeEnum]!
+    ✓ accepts an type as item type of list: [SomeInputObject]!
+    ✓ rejects a non-type as item type of list: [object Object]
+    ✓ rejects a non-type as item type of list: function String() { [native code] }
+    ✓ rejects a non-type as item type of list: undefined
+    ✓ rejects a non-type as item type of list: null
+
+  Type System: NonNull must accept GraphQL types
+    ✓ accepts an type as nullable type of non-null: String
+    ✓ accepts an type as nullable type of non-null: SomeScalar
+    ✓ accepts an type as nullable type of non-null: SomeObject
+    ✓ accepts an type as nullable type of non-null: SomeUnion
+    ✓ accepts an type as nullable type of non-null: SomeInterface
+    ✓ accepts an type as nullable type of non-null: SomeEnum
+    ✓ accepts an type as nullable type of non-null: SomeInputObject
+    ✓ accepts an type as nullable type of non-null: [String]
+    ✓ accepts an type as nullable type of non-null: [String!]
+    ✓ rejects a non-type as nullable type of non-null: String!
+    ✓ rejects a non-type as nullable type of non-null: [object Object]
+    ✓ rejects a non-type as nullable type of non-null: function String() { [native code] }
+    ✓ rejects a non-type as nullable type of non-null: undefined
+    ✓ rejects a non-type as nullable type of non-null: null
+
+  Objects must adhere to Interface they implement
+    ✓ accepts an Object which implements an Interface
+    ✓ accepts an Object which implements an Interface along with more fields
+    ✓ accepts an Object which implements an Interface field along with additional optional arguments
+    ✓ rejects an Object which implements an Interface field along with additional required arguments
+    ✓ rejects an Object missing an Interface field
+    ✓ rejects an Object with an incorrectly typed Interface field
+    ✓ rejects an Object with a differently typed Interface field
+    ✓ accepts an Object with a subtyped Interface field (interface)
+    ✓ accepts an Object with a subtyped Interface field (union)
+    ✓ rejects an Object missing an Interface argument
+    ✓ rejects an Object with an incorrectly typed Interface argument
+    ✓ accepts an Object with an equivalently modified Interface field type
+    ✓ rejects an Object with a non-list Interface field list type
+    ✓ rejects an Object with a list Interface field non-list type
+    ✓ accepts an Object with a subset non-null Interface field type
+    ✓ rejects an Object with a superset nullable Interface field type
+    ✓ does not allow isDeprecated without deprecationReason on field
+
+  assertValidName()
+    ✓ warns against use of leading double underscores
+    ✓ warns exactly once even in the presence of multiple violations
+    ✓ throws for non-strings
+    ✓ throws for names with invalid characters
+    ✓ does not warn during introspection
+    ✓ does not warn when GRAPHQL_NO_NAME_WARNING is in effect
+
+  formatWarning()
+    ✓ formats given a Chrome-style stack property
+    ✓ formats given a Node-style stack property
+    ✓ formats given a Firefox-style stack property
+    ✓ formats given a Safari-style stack property
+    ✓ formats in the absence of a stack property
+
+  astFromValue
+    ✓ converts boolean values to ASTs
+    ✓ converts Int values to Int ASTs
+    ✓ converts Float values to Int/Float ASTs
+    ✓ converts String values to String ASTs
+    ✓ converts ID values to Int/String ASTs
+    ✓ does not converts NonNull values to NullValue
+    ✓ converts string values to Enum ASTs if possible
+    ✓ converts array values to List ASTs
+    ✓ converts list singletons
+    ✓ converts input objects
+    ✓ converts input objects with explicit nulls
+
+  Schema Builder
+    ✓ can use built schema for limited execution
+    ✓ can build a schema directly from the source
+    ✓ Simple type
+    ✓ With directives
+    ✓ Supports descriptions
+    ✓ Maintains @skip & @include
+    ✓ Overriding directives excludes specified
+    ✓ Adding directives maintains @skip & @include
+    ✓ Type modifiers
+    ✓ Recursive type
+    ✓ Two types circular
+    ✓ Single argument field
+    ✓ Simple type with multiple arguments
+    ✓ Simple type with interface
+    ✓ Simple output enum
+    ✓ Simple input enum
+    ✓ Multiple value enum
+    ✓ Simple Union
+    ✓ Multiple Union
+    ✓ Custom Scalar
+    ✓ Input Object
+    ✓ Simple argument field with default
+    ✓ Simple type with mutation
+    ✓ Simple type with subscription
+    ✓ Unreferenced type implementing referenced interface
+    ✓ Unreferenced type implementing referenced union
+    ✓ Supports @deprecated
+    ✓ Correctly assign AST nodes
+
+  Failures
+    ✓ Requires a schema definition or Query type
+    ✓ Allows only a single schema definition
+    ✓ Requires a query type
+    ✓ Allows only a single query type
+    ✓ Allows only a single mutation type
+    ✓ Allows only a single subscription type
+    ✓ Unknown type referenced
+    ✓ Unknown type in interface list
+    ✓ Unknown type in union list
+    ✓ Unknown query type
+    ✓ Unknown mutation type
+    ✓ Unknown subscription type
+    ✓ Does not consider operation names
+    ✓ Does not consider fragment names
+    ✓ Forbids duplicate type definitions
+
+  Type System: build schema from introspection
+    ✓ builds a simple schema
+    ✓ builds a simple schema with all operation types
+    ✓ uses built-in scalars when possible
+    ✓ builds a schema with a recursive type reference
+    ✓ builds a schema with a circular type reference
+    ✓ builds a schema with an interface
+    ✓ builds a schema with an implicit interface
+    ✓ builds a schema with a union
+    ✓ builds a schema with complex field values
+    ✓ builds a schema with field arguments
+    ✓ builds a schema with an enum
+    ✓ builds a schema with an input object
+    ✓ builds a schema with field arguments with default values
+    ✓ builds a schema with custom directives
+    ✓ builds a schema with legacy directives
+    ✓ builds a schema aware of deprecation
+    ✓ can use client schema for limited execution
+    throws when given incomplete introspection
+      ✓ throws when given empty types
+      ✓ throws when missing kind
+    very deep decorators are not supported
+      ✓ fails on very deep (> 7 levels) lists
+      ✓ fails on a very deep (> 7 levels) non-null
+      ✓ succeeds on deep (<= 7 levels) types
+
+  concatAST
+    ✓ concats two ASTs together
+
+  extendSchema
+    ✓ returns the original schema when there are no type definitions
+    ✓ extends without altering original schema
+    ✓ can be used for limited execution
+    ✓ can describe the extended fields
+    ✓ extends objects by adding new fields
+    ✓ correctly assign AST nodes to new and extended types
+    ✓ builds types with deprecated fields/values
+    ✓ extends objects with deprecated fields
+    ✓ extends objects by adding new unused types
+    ✓ extends objects by adding new fields with arguments
+    ✓ extends objects by adding new fields with existing types
+    ✓ extends objects by adding implemented interfaces
+    ✓ extends objects by including new types
+    ✓ extends objects by adding implemented new interfaces
+    ✓ extends objects multiple times
+    ✓ may extend mutations and subscriptions
+    ✓ may extend directives with new simple directive
+    ✓ may extend directives with new complex directive
+    ✓ does not allow replacing a default directive
+    ✓ does not allow replacing a custom directive
+    ✓ does not allow replacing an existing type
+    ✓ does not allow replacing an existing field
+    ✓ does not allow implementing an existing interface
+    ✓ does not allow referencing an unknown type
+    ✓ does not allow extending an unknown type
+    does not allow extending a non-object type
+      ✓ not an interface
+      ✓ not a scalar
+
+  findBreakingChanges
+    ✓ should detect if a type was removed or not
+    ✓ should detect if a type changed its type
+    ✓ should detect if a field on a type was deleted or changed type
+    ✓ should detect if fields on input types changed kind or were removed
+    ✓ should detect if a non-null field is added to an input type
+    ✓ should detect if a type was removed from a union type
+    ✓ should detect if a value was removed from an enum type
+    ✓ should detect if a field argument was removed
+    ✓ should detect if a field argument has changed type
+    ✓ should detect if a non-null field argument was added
+    ✓ should not flag args with the same type signature as breaking
+    ✓ should consider args that move away from NonNull as non-breaking
+    ✓ should detect interfaces removed from types
+    ✓ should detect all breaking changes
+
+  findDangerousChanges
+    ✓ should find all dangerous changes
+    findArgChanges
+      ✓ should detect if an argument's defaultValue has changed
+
+  findDeprecatedUsages
+    ✓ should report empty set for no deprecated usages
+    ✓ should report usage of deprecated fields
+    ✓ should report usage of deprecated enums
+
+  getOperationAST
+    ✓ Gets an operation from a simple document
+    ✓ Gets an operation from a document with named op (mutation)
+    ✓ Gets an operation from a document with named op (subscription)
+    ✓ Does not get missing operation
+    ✓ Does not get ambiguous unnamed operation
+    ✓ Does not get ambiguous named operation
+    ✓ Does not get misnamed operation
+    ✓ Gets named operation
+
+  isValidJSValue for GraphQLInt
+    ✓ returns no error for int input
+    ✓ returns no error for negative int input
+    ✓ returns no error for exponent input
+    ✓ returns a single error for empty value
+    ✓ returns a single error for empty value
+    ✓ returns error for float input as int
+    ✓ returns a single error for char input
+    ✓ returns a single error for char input
+
+  isValidJSValue for GraphQLFloat
+    ✓ returns no error for int input
+    ✓ returns no error for exponent input
+    ✓ returns no error for float input
+    ✓ returns a single error for empty value
+    ✓ returns a single error for empty value
+    ✓ returns a single error for char input
+    ✓ returns a single error for char input
+
+  Type System Printer
+    ✓ Prints String Field
+    ✓ Prints [String] Field
+    ✓ Prints String! Field
+    ✓ Prints [String]! Field
+    ✓ Prints [String!] Field
+    ✓ Prints [String!]! Field
+    ✓ Print Object Field
+    ✓ Prints String Field With Int Arg
+    ✓ Prints String Field With Int Arg With Default
+    ✓ Prints String Field With Int Arg With Default Null
+    ✓ Prints String Field With Int! Arg
+    ✓ Prints String Field With Multiple Args
+    ✓ Prints String Field With Multiple Args, First is Default
+    ✓ Prints String Field With Multiple Args, Second is Default
+    ✓ Prints String Field With Multiple Args, Last is Default
+    ✓ Print Interface
+    ✓ Print Multiple Interface
+    ✓ Print Unions
+    ✓ Print Input Type
+    ✓ Custom Scalar
+    ✓ Enum
+    ✓ Print Introspection Schema
+
+  separateOperations
+    ✓ separates one AST into multiple, maintaining document order
+    ✓ survives circular dependencies
+
+  typeComparators
+    isEqualType
+      ✓ same reference are equal
+      ✓ int and float are not equal
+      ✓ lists of same type are equal
+      ✓ lists is not equal to item
+      ✓ non-null of same type are equal
+      ✓ non-null is not equal to nullable
+    isTypeSubTypeOf
+      ✓ same reference is subtype
+      ✓ int is not subtype of float
+      ✓ non-null is subtype of nullable
+      ✓ nullable is not subtype of non-null
+      ✓ item is not subtype of list
+      ✓ list is not subtype of item
+      ✓ member is subtype of union
+      ✓ implementation is subtype of interface
+
+  valueFromAST
+    ✓ rejects empty input
+    ✓ converts according to input coercion rules
+    ✓ does not convert when input coercion rules reject a value
+    ✓ converts enum values according to input coercion rules
+    ✓ coerces to null unless non-null
+    ✓ coerces lists of values
+    ✓ coerces non-null lists of values
+    ✓ coerces lists of non-null values
+    ✓ coerces non-null lists of non-null values
+    ✓ coerces input objects according to input coercion rules
+    ✓ accepts variable values assuming already coerced
+    ✓ asserts variables are provided as items in lists
+    ✓ omits input object fields for unprovided variables
+
+  Validate: Argument values of correct type
+    Valid values
+      ✓ Good int value
+      ✓ Good negative int value
+      ✓ Good boolean value
+      ✓ Good string value
+      ✓ Good float value
+      ✓ Good negative float value
+      ✓ Int into Float
+      ✓ Int into ID
+      ✓ String into ID
+      ✓ Good enum value
+      ✓ Enum with undefined value
+      ✓ Enum with null value
+      ✓ null into nullable type
+    Invalid String values
+      ✓ Int into String
+      ✓ Float into String
+      ✓ Boolean into String
+      ✓ Unquoted String into String
+    Invalid Int values
+      ✓ String into Int
+      ✓ Big Int into Int
+      ✓ Unquoted String into Int
+      ✓ Simple Float into Int
+      ✓ Float into Int
+    Invalid Float values
+      ✓ String into Float
+      ✓ Boolean into Float
+      ✓ Unquoted into Float
+    Invalid Boolean value
+      ✓ Int into Boolean
+      ✓ Float into Boolean
+      ✓ String into Boolean
+      ✓ Unquoted into Boolean
+    Invalid ID value
+      ✓ Float into ID
+      ✓ Boolean into ID
+      ✓ Unquoted into ID
+    Invalid Enum value
+      ✓ Int into Enum
+      ✓ Float into Enum
+      ✓ String into Enum
+      ✓ Boolean into Enum
+      ✓ Unknown Enum Value into Enum
+      ✓ Different case Enum Value into Enum
+    Valid List value
+      ✓ Good list value
+      ✓ Empty list value
+      ✓ Null value
+      ✓ Single value into List
+    Invalid List value
+      ✓ Incorrect item type
+      ✓ Single value of incorrect type
+    Valid non-nullable value
+      ✓ Arg on optional arg
+      ✓ No Arg on optional arg
+      ✓ Multiple args
+      ✓ Multiple args reverse order
+      ✓ No args on multiple optional
+      ✓ One arg on multiple optional
+      ✓ Second arg on multiple optional
+      ✓ Multiple reqs on mixedList
+      ✓ Multiple reqs and one opt on mixedList
+      ✓ All reqs and opts on mixedList
+    Invalid non-nullable value
+      ✓ Incorrect value type
+      ✓ Incorrect value and missing argument
+      ✓ Null value
+    Valid input object value
+      ✓ Optional arg, despite required field in type
+      ✓ Partial object, only required
+      ✓ Partial object, required field can be falsey
+      ✓ Partial object, including required
+      ✓ Full object
+      ✓ Full object with fields in different order
+    Invalid input object value
+      ✓ Partial object, missing required
+      ✓ Partial object, invalid field type
+      ✓ Partial object, unknown field arg
+    Directive arguments
+      ✓ with directives of valid types
+      ✓ with directive with incorrect types
+
+  Validate: Variable default values of correct type
+    ✓ variables with no default values
+    ✓ required variables without default values
+    ✓ variables with valid default values
+    ✓ variables with valid default null values
+    ✓ variables with invalid default null values
+    ✓ no required variables with default values
+    ✓ variables with invalid default values
+    ✓ complex variables missing required field
+    ✓ list variables with invalid item
+
+  Validate: Fields on correct type
+    ✓ Object field selection
+    ✓ Aliased object field selection
+    ✓ Interface field selection
+    ✓ Aliased interface field selection
+    ✓ Lying alias selection
+    ✓ Ignores fields on unknown type
+    ✓ reports errors when type is known again
+    ✓ Field not defined on fragment
+    ✓ Ignores deeply unknown field
+    ✓ Sub-field not defined
+    ✓ Field not defined on inline fragment
+    ✓ Aliased field target not defined
+    ✓ Aliased lying field target not defined
+    ✓ Not defined on interface
+    ✓ Defined on implementors but not on interface
+    ✓ Meta field selection on union
+    ✓ Direct field selection on union
+    ✓ Defined on implementors queried on union
+    ✓ valid field in inline fragment
+    Fields on correct type error message
+      ✓ Works with no suggestions
+      ✓ Works with no small numbers of type suggestions
+      ✓ Works with no small numbers of field suggestions
+      ✓ Only shows one set of suggestions at a time, preferring types
+      ✓ Limits lots of type suggestions
+      ✓ Limits lots of field suggestions
+
+  Validate: Fragments on composite types
+    ✓ object is valid fragment type
+    ✓ interface is valid fragment type
+    ✓ object is valid inline fragment type
+    ✓ inline fragment without type is valid
+    ✓ union is valid fragment type
+    ✓ scalar is invalid fragment type
+    ✓ enum is invalid fragment type
+    ✓ input object is invalid fragment type
+    ✓ scalar is invalid inline fragment type
+
+  Validate: Known argument names
+    ✓ single arg is known
+    ✓ multiple args are known
+    ✓ ignores args of unknown fields
+    ✓ multiple args in reverse order are known
+    ✓ no args on optional arg
+    ✓ args are known deeply
+    ✓ directive args are known
+    ✓ undirective args are invalid
+    ✓ invalid arg name
+    ✓ unknown args amongst known args
+    ✓ unknown args deeply
+
+  Validate: Known directives
+    ✓ with no directives
+    ✓ with known directives
+    ✓ with unknown directive
+    ✓ with many unknown directives
+    ✓ with well placed directives
+    ✓ with misplaced directives
+    within schema language
+      ✓ with well placed directives
+      ✓ with misplaced directives
+
+  Validate: Known fragment names
+    ✓ known fragment names are valid
+    ✓ unknown fragment names are invalid
+
+  Validate: Known type names
+    ✓ known type names are valid
+    ✓ unknown type names are invalid
+    ✓ ignores type definitions
+
+  Validate: Anonymous operation must be alone
+    ✓ no operations
+    ✓ one anon operation
+    ✓ multiple named operations
+    ✓ anon operation with fragment
+    ✓ multiple anon operations
+    ✓ anon operation with a mutation
+    ✓ anon operation with a subscription
+
+  Validate: No circular fragment spreads
+    ✓ single reference is valid
+    ✓ spreading twice is not circular
+    ✓ spreading twice indirectly is not circular
+    ✓ double spread within abstract types
+    ✓ does not false positive on unknown fragment
+    ✓ spreading recursively within field fails
+    ✓ no spreading itself directly
+    ✓ no spreading itself directly within inline fragment
+    ✓ no spreading itself indirectly
+    ✓ no spreading itself indirectly reports opposite order
+    ✓ no spreading itself indirectly within inline fragment
+    ✓ no spreading itself deeply
+    ✓ no spreading itself deeply two paths
+    ✓ no spreading itself deeply two paths -- alt traverse order
+    ✓ no spreading itself deeply and immediately
+
+  Validate: No undefined variables
+    ✓ all variables defined
+    ✓ all variables deeply defined
+    ✓ all variables deeply in inline fragments defined
+    ✓ all variables in fragments deeply defined
+    ✓ variable within single fragment defined in multiple operations
+    ✓ variable within fragments defined in operations
+    ✓ variable within recursive fragment defined
+    ✓ variable not defined
+    ✓ variable not defined by un-named query
+    ✓ multiple variables not defined
+    ✓ variable in fragment not defined by un-named query
+    ✓ variable in fragment not defined by operation
+    ✓ multiple variables in fragments not defined
+    ✓ single variable in fragment not defined by multiple operations
+    ✓ variables in fragment not defined by multiple operations
+    ✓ variable in fragment used by other operation
+    ✓ multiple undefined variables produce multiple errors
+
+  Validate: No unused fragments
+    ✓ all fragment names are used
+    ✓ all fragment names are used by multiple operations
+    ✓ contains unknown fragments
+    ✓ contains unknown fragments with ref cycle
+    ✓ contains unknown and undef fragments
+
+  Validate: No unused variables
+    ✓ uses all variables
+    ✓ uses all variables deeply
+    ✓ uses all variables deeply in inline fragments
+    ✓ uses all variables in fragments
+    ✓ variable used by fragment in multiple operations
+    ✓ variable used by recursive fragment
+    ✓ variable not used
+    ✓ multiple variables not used
+    ✓ variable not used in fragments
+    ✓ multiple variables not used in fragments
+    ✓ variable not used by unreferenced fragment
+    ✓ variable not used by fragment used by other operation
+
+  Validate: Overlapping fields can be merged
+    ✓ unique fields
+    ✓ identical fields
+    ✓ identical fields with identical args
+    ✓ identical fields with identical directives
+    ✓ different args with different aliases
+    ✓ different directives with different aliases
+    ✓ different skip/include directives accepted
+    ✓ Same aliases with different field targets
+    ✓ Same aliases allowed on non-overlapping fields
+    ✓ Alias masking direct field access
+    ✓ different args, second adds an argument
+    ✓ different args, second missing an argument
+    ✓ conflicting args
+    ✓ allows different args where no conflict is possible
+    ✓ encounters conflict in fragments
+    ✓ reports each conflict once
+    ✓ deep conflict
+    ✓ deep conflict with multiple issues
+    ✓ very deep conflict
+    ✓ reports deep conflict to nearest common ancestor
+    ✓ reports deep conflict to nearest common ancestor in fragments
+    ✓ reports deep conflict in nested fragments
+    ✓ ignores unknown fragments
+    return types must be unambiguous
+      ✓ conflicting return types which potentially overlap
+      ✓ compatible return shapes on different return types
+      ✓ disallows differing return types despite no overlap
+      ✓ reports correctly when a non-exclusive follows an exclusive
+      ✓ disallows differing return type nullability despite no overlap
+      ✓ disallows differing return type list despite no overlap
+      ✓ disallows differing subfields
+      ✓ disallows differing deep return types despite no overlap
+      ✓ allows non-conflicting overlaping types
+      ✓ same wrapped scalar return types
+      ✓ allows inline typeless fragments
+      ✓ compares deep types including list
+      ✓ ignores unknown types
+      ✓ error message contains hint for alias conflict
+      ✓ works for field names that are JS keywords
+
+  Validate: Possible fragment spreads
+    ✓ of the same object
+    ✓ of the same object with inline fragment
+    ✓ object into an implemented interface
+    ✓ object into containing union
+    ✓ union into contained object
+    ✓ union into overlapping interface
+    ✓ union into overlapping union
+    ✓ interface into implemented object
+    ✓ interface into overlapping interface
+    ✓ interface into overlapping interface in inline fragment
+    ✓ interface into overlapping union
+    ✓ different object into object
+    ✓ different object into object in inline fragment
+    ✓ object into not implementing interface
+    ✓ object into not containing union
+    ✓ union into not contained object
+    ✓ union into non overlapping interface
+    ✓ union into non overlapping union
+    ✓ interface into non implementing object
+    ✓ interface into non overlapping interface
+    ✓ interface into non overlapping interface in inline fragment
+    ✓ interface into non overlapping union
+
+  Validate: Provided required arguments
+    ✓ ignores unknown arguments
+    Valid non-nullable value
+      ✓ Arg on optional arg
+      ✓ No Arg on optional arg
+      ✓ Multiple args
+      ✓ Multiple args reverse order
+      ✓ No args on multiple optional
+      ✓ One arg on multiple optional
+      ✓ Second arg on multiple optional
+      ✓ Multiple reqs on mixedList
+      ✓ Multiple reqs and one opt on mixedList
+      ✓ All reqs and opts on mixedList
+    Invalid non-nullable value
+      ✓ Missing one non-nullable argument
+      ✓ Missing multiple non-nullable arguments
+      ✓ Incorrect value and missing argument
+    Directive arguments
+      ✓ ignores unknown directives
+      ✓ with directives of valid types
+      ✓ with directive with missing types
+
+  Validate: Scalar leafs
+    ✓ valid scalar selection
+    ✓ object type missing selection
+    ✓ interface type missing selection
+    ✓ valid scalar selection with args
+    ✓ scalar selection not allowed on Boolean
+    ✓ scalar selection not allowed on Enum
+    ✓ scalar selection not allowed with args
+    ✓ Scalar selection not allowed with directives
+    ✓ Scalar selection not allowed with directives and args
+
+  Validate: Subscriptions with single field
+    ✓ valid subscription
+    ✓ fails with more than one root field
+    ✓ fails with more than one root field including introspection
+    ✓ fails with many more than one root field
+    ✓ fails with more than one root field in anonymous subscriptions
+
+  Validate: Unique argument names
+    ✓ no arguments on field
+    ✓ no arguments on directive
+    ✓ argument on field
+    ✓ argument on directive
+    ✓ same argument on two fields
+    ✓ same argument on field and directive
+    ✓ same argument on two directives
+    ✓ multiple field arguments
+    ✓ multiple directive arguments
+    ✓ duplicate field arguments
+    ✓ many duplicate field arguments
+    ✓ duplicate directive arguments
+    ✓ many duplicate directive arguments
+
+  Validate: Directives Are Unique Per Location
+    ✓ no directives
+    ✓ unique directives in different locations
+    ✓ unique directives in same locations
+    ✓ same directives in different locations
+    ✓ same directives in similar locations
+    ✓ duplicate directives in one location
+    ✓ many duplicate directives in one location
+    ✓ different duplicate directives in one location
+    ✓ duplicate directives in many locations
+
+  Validate: Unique fragment names
+    ✓ no fragments
+    ✓ one fragment
+    ✓ many fragments
+    ✓ inline fragments are always unique
+    ✓ fragment and operation named the same
+    ✓ fragments named the same
+    ✓ fragments named the same without being referenced
+
+  Validate: Unique input field names
+    ✓ input object with fields
+    ✓ same input object within two args
+    ✓ multiple input object fields
+    ✓ allows for nested input objects with similar fields
+    ✓ duplicate input object fields
+    ✓ many duplicate input object fields
+
+  Validate: Unique operation names
+    ✓ no operations
+    ✓ one anon operation
+    ✓ one named operation
+    ✓ multiple operations
+    ✓ multiple operations of different types
+    ✓ fragment and operation named the same
+    ✓ multiple operations of same name
+    ✓ multiple ops of same name of different types (mutation)
+    ✓ multiple ops of same name of different types (subscription)
+
+  Validate: Unique variable names
+    ✓ unique variable names
+    ✓ duplicate variable names
+
+  Validate: Supports full validation
+    ✓ validates queries
+    ✓ validates using a custom TypeInfo
+
+  Validate: Variables are input types
+    ✓ input types are valid
+    ✓ output types are invalid
+
+  Validate: Variables are in allowed positions
+    ✓ Boolean => Boolean
+    ✓ Boolean => Boolean within fragment
+    ✓ Boolean! => Boolean
+    ✓ Boolean! => Boolean within fragment
+    ✓ Int => Int! with default
+    ✓ [String] => [String]
+    ✓ [String!] => [String]
+    ✓ String => [String] in item position
+    ✓ String! => [String] in item position
+    ✓ ComplexInput => ComplexInput
+    ✓ ComplexInput => ComplexInput in field position
+    ✓ Boolean! => Boolean! in directive
+    ✓ Boolean => Boolean! in directive with default
+    ✓ Int => Int!
+    ✓ Int => Int! within fragment
+    ✓ Int => Int! within nested fragment
+    ✓ String over Boolean
+    ✓ String => [String]
+    ✓ Boolean => Boolean! in directive
+    ✓ String => Boolean! in directive
+
+
+  1262 passing (1s)
+
+Done in 11.38s.

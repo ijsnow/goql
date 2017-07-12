@@ -179,6 +179,16 @@ describe('Lexer', () => {
   });
 
   it('lex reports useful string errors', () => {
+    // eslint-disable-next-line
+    try {
+      // eslint-disable-next-line
+      lexOne('"')
+      // eslint-disable-next-line
+    } catch(e) {
+      // eslint-disable-next-line
+      console.log('err', e);
+      // eslint-disable-next-line
+    }
 
     expect(
       () => lexOne('"')

@@ -16,55 +16,65 @@ const (
 	KindArgument            = "Argument"
 )
 
-// // Fragments
+// Fragments
 
-// export const FRAGMENT_SPREAD = 'FragmentSpread';
-// export const INLINE_FRAGMENT = 'InlineFragment';
-// export const FRAGMENT_DEFINITION = 'FragmentDefinition';
+const (
+	KindFragmentSpread     = "FragmentSpread"
+	KindInlineFragment     = "InlineFragment"
+	KindFragmentDefinition = "FragmentDefinition"
+)
 
-// // Values
+// Values
 
-// export const INT = 'IntValue';
-// export const FLOAT = 'FloatValue';
-// export const STRING = 'StringValue';
-// export const BOOLEAN = 'BooleanValue';
-// export const NULL = 'NullValue';
-// export const ENUM = 'EnumValue';
-// export const LIST = 'ListValue';
-// export const OBJECT = 'ObjectValue';
-// export const OBJECT_FIELD = 'ObjectField';
+const (
+	KindInt         = "IntValue"
+	KindFloat       = "FloatValue"
+	FloatString     = "StringValue"
+	KindBoolean     = "BooleanValue"
+	KindNull        = "NullValue"
+	KindEnum        = "EnumValue"
+	KindList        = "ListValue"
+	KindObject      = "ObjectValue"
+	KindObjectField = "ObjectField"
+)
 
-// // Directives
+// Directives
 
-// export const DIRECTIVE = 'Directive';
+const KindDirective = "Directive"
 
-// // Types
+// Types
 
-// export const NAMED_TYPE = 'NamedType';
-// export const LIST_TYPE = 'ListType';
-// export const NON_NULL_TYPE = 'NonNullType';
+const (
+	KindNamedType   = "NamedType"
+	KindListType    = "ListType"
+	KindNonNullType = "NonNullType"
+)
 
-// // Type System Definitions
+// Type System Definitions
 
-// export const SCHEMA_DEFINITION = 'SchemaDefinition';
-// export const OPERATION_TYPE_DEFINITION = 'OperationTypeDefinition';
+const (
+	KindSchemaDefinition        = "SchemaDefinition"
+	KindOperationTypeDefinition = "OperationTypeDefinition"
+)
 
-// // Type Definitions
+// Type Definitions
 
-// export const SCALAR_TYPE_DEFINITION = 'ScalarTypeDefinition';
-// export const OBJECT_TYPE_DEFINITION = 'ObjectTypeDefinition';
-// export const FIELD_DEFINITION = 'FieldDefinition';
-// export const INPUT_VALUE_DEFINITION = 'InputValueDefinition';
-// export const INTERFACE_TYPE_DEFINITION = 'InterfaceTypeDefinition';
-// export const UNION_TYPE_DEFINITION = 'UnionTypeDefinition';
-// export const ENUM_TYPE_DEFINITION = 'EnumTypeDefinition';
-// export const ENUM_VALUE_DEFINITION = 'EnumValueDefinition';
-// export const INPUT_OBJECT_TYPE_DEFINITION = 'InputObjectTypeDefinition';
+const (
+	KindScalarTypeDefinition     = "ScalarTypeDefinition"
+	KindObjectTypeDefinition     = "ObjectTypeDefinition"
+	KindFieldDefinition          = "FieldDefinition"
+	KindInputValueDefinition     = "InputValueDefinition"
+	KindInterfaceTypeDefinition  = "InterfaceTypeDefinition"
+	KindUnionTypeDefinition      = "UnionTypeDefinition"
+	KindEnumTypeDefinition       = "EnumTypeDefinition"
+	KindEnumValueDefinition      = "EnumValueDefinition"
+	KindInputObjectTypeDefintion = "InputObjectTypeDefinition"
+)
 
-// // Type Extensions
+// Type Extensions
 
-// export const TYPE_EXTENSION_DEFINITION = 'TypeExtensionDefinition';
+const KindTypeExtensionDefinition = "TypeExtensionDefinition"
 
-// // Directive Definitions
+// Directive Definitions
 
-// export const DIRECTIVE_DEFINITION = 'DirectiveDefinition';
+const KindDirectiveDefinition = "DirectiveDefinition"

@@ -2,7 +2,7 @@ package language
 
 // Source is a representation of source input to GraphQL
 type Source struct {
-	Body string
+	Body string `json:"-"`
 }
 
 // NewSource creates a new Source struct

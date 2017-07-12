@@ -29,160 +29,53 @@ type Location struct {
 	Source Source
 }
 
-// TokenKind represents the different kinds of tokens in a GraphQL document.
-type TokenKind string
-
-const (
-	TokenSOF = iota
-	TokenEOF
-	TokenBang
-	TokenDollar
-	TokenOpenParen
-	TokenCloseParen
-	TokenEllipsis
-	TokenColon
-	TokenEqual
-	TokenAt
-	TokenOpenSquare
-	TokenCloseSquare
-	TokenOpenCurly
-	TokenCloseCurly
-	TokenBar
-	TokenName
-	TokenInt
-	TokenFloat
-	TokenString
-	TokenComment
-)
-
-// Tokens holds all of the special tokens in the GraphQL language spec
-var Tokens = map[string]int{
-	"<SOF>":   TokenSOF,
-	"<EOF>":   TokenEOF,
-	"!":       TokenBang,
-	"$":       TokenDollar,
-	"(":       TokenOpenParen,
-	")":       TokenCloseParen,
-	"...":     TokenEllipsis,
-	":":       TokenColon,
-	"=":       TokenEqual,
-	"@":       TokenAt,
-	"[":       TokenOpenSquare,
-	"]":       TokenCloseSquare,
-	"{":       TokenOpenCurly,
-	"}":       TokenCloseCurly,
-	"|":       TokenBar,
-	"Name":    TokenName,
-	"Int":     TokenInt,
-	"Float":   TokenFloat,
-	"String":  TokenString,
-	"Comment": TokenComment,
-}
-
-// TODO: make map of tokens that point to the TokenKind
-
-// TODO: maybe make a func FindTokenKind that takes the token then finds the TokenKind in above map
-
-// Token represents a range of characters represented by a lexical token
-// within a Source.
-type Token struct {
-
-	/**
-	 * The kind of Token.
-	 */
-	Kind TokenKind
-
-	/**
-	 * The character offset at which this Node begins.
-	 */
-	Start int
-
-	/**
-	 * The character offset at which this Node ends.
-	 */
-	End int
-
-	/**
-	 * The 1-indexed line number on which this Token appears.
-	 */
-	Line int
-
-	/**
-	 * The 1-indexed column number at which this Token begins.
-	 */
-	Column int
-
-	/**
-	 * For non-punctuation tokens, represents the interpreted value of the token.
-	 */
-	Value string
-
-	/**
-	 * Tokens exist as nodes in a double-linked-list amongst all tokens
-	 * including ignored tokens. <SOF> is always the first node and <EOF>
-	 * the last.
-	 */
-	Prev *Token
-	Next *Token
-}
-
 // TODO: Decide what to do with the interfaces in this file
 
 // ASTNode ...
-type ASTNode interface{}
+type ASTNode interface {
+	GetLoc() *Location
+}
 
-/**
- * ASTNodes is the list of all possible AST node types.
- */
-// var ASTNodes = []ASTNode{
-// NameNode,
-// DocumentNode,
-// OperationDefinitionNode,
-// VariableDefinitionNode,
-// VariableNode,
-// SelectionSetNode,
-// FieldNode,
-// ArgumentNode,
-// FragmentSpreadNode,
-// InlineFragmentNode,
-// FragmentDefinitionNode,
-// IntValueNode,
-// FloatValueNode,
-// StringValueNode,
-// BooleanValueNode,
-// NullValueNode,
-// EnumValueNode,
-// ListValueNode,
-// ObjectValueNode,
-// ObjectFieldNode,
-// DirectiveNode,
-// NamedTypeNode,
-// ListTypeNode,
-// NonNullTypeNode,
-// SchemaDefinitionNode,
-// OperationTypeDefinitionNode,
-// ScalarTypeDefinitionNode,
-// ObjectTypeDefinitionNode,
-// FieldDefinitionNode,
-// InputValueDefinitionNode,
-// InterfaceTypeDefinitionNode,
-// UnionTypeDefinitionNode,
-// EnumTypeDefinitionNode,
-// EnumValueDefinitionNode,
-// InputObjectTypeDefinitionNode,
-// TypeExtensionDefinitionNode,
-// DirectiveDefinitionNode,
-// }
+// NodeList is a list of ASTNodes with some helper func attached
+type NodeList []ASTNode
+
+// GetStarts filters a NodeList so that each item in the list
+// has a Location and then builds a list of all the Start locations
+func (n *NodeList) GetStarts() []int {
+	var list NodeList
+	for _, node := range *n {
+		if node.GetLoc() != nil {
+			list = append(list, node)
+		}
+	}
+
+	starts := make([]int, len(*n))
+	for idx, s := range *n {
+		starts[idx] = s.GetLoc().Start
+	}
+	return starts
+}
+
+type node struct {
+	Loc *Location
+}
+
+// GetLoc gets the location of a node.
+// It is primarily here to bind all of the node
+// types to the ASTNode interface
+func (n node) GetLoc() *Location {
+	return n.Loc
+}
 
 // NameNode ...
 type NameNode struct {
-	Loc   *Location
+	node
 	Value string
 }
 
 // DocumentNode ...
 type DocumentNode struct {
-	Loc        *Location
+	node
 	Definition []DefinitionNode
 }
 
@@ -197,7 +90,7 @@ type DefinitionNode interface{}
 //   | TypeSystemDefinitionNode; // experimental non-spec addition.
 
 type OperationDefinitionNode struct {
-	Loc                 *Location
+	node
 	Operation           OperationTypeNode
 	Name                NameNode
 	VariableDefinitions *[]VariableDefinitionNode
@@ -216,7 +109,7 @@ const (
 
 // VariableDefinitionNode ...
 type VariableDefinitionNode struct {
-	Loc          *Location
+	node
 	Variable     VariableNode
 	Type         TypeNode
 	DefaultValue *ValueNode
@@ -224,13 +117,13 @@ type VariableDefinitionNode struct {
 
 // VariableNode ...
 type VariableNode struct {
-	Loc  *Location
+	node
 	Name NameNode
 }
 
 // SelectionSetNode ...
 type SelectionSetNode struct {
-	Loc        *Location
+	node
 	Selections []SelectionNode
 }
 
@@ -246,7 +139,7 @@ type SelectionNode interface{}
 
 // FieldNode ...
 type FieldNode struct {
-	Loc          *Location
+	node
 	Alias        *NameNode
 	Name         NameNode
 	Arguments    *[]ArgumentNode
@@ -256,7 +149,7 @@ type FieldNode struct {
 
 // ArgumentNode ...
 type ArgumentNode struct {
-	Loc   *Location
+	node
 	Name  NameNode
 	Value ValueNode
 }
@@ -265,14 +158,14 @@ type ArgumentNode struct {
 
 // FragmentSpreadNode ...
 type FragmentSpreadNode struct {
-	Loc        *Location
+	node
 	Name       NameNode
 	Directives *[]DirectiveNode
 }
 
 // InlineFragmentNode ...
 type InlineFragmentNode struct {
-	Loc           *Location
+	node
 	TypeCondition *NamedTypeNode
 	Directives    *[]DirectiveNode
 	SelectionSet  *SelectionSetNode
@@ -280,7 +173,7 @@ type InlineFragmentNode struct {
 
 // FragmentDefinitionNode ...
 type FragmentDefinitionNode struct {
-	Loc           *Location
+	node
 	Name          NameNode
 	TypeCondition NamedTypeNode
 	Directives    *[]DirectiveNode
@@ -311,19 +204,19 @@ type IntValueNode struct {
 
 // FloatValueNode ...
 type FloatValueNode struct {
-	Loc   *Location
+	node
 	Value string
 }
 
 // StringValueNode ...
 type StringValueNode struct {
-	Loc   *Location
+	node
 	Value string
 }
 
 // BooleanValueNode ...
 type BooleanValueNode struct {
-	Loc   *Location
+	node
 	Value bool
 }
 
@@ -334,25 +227,25 @@ type NullValueNode struct {
 
 // EnumValueNode ...
 type EnumValueNode struct {
-	Loc   *Location
+	node
 	Value string
 }
 
 // ListValueNode ...
 type ListValueNode struct {
-	Loc    *Location
+	node
 	Values []ValueNode
 }
 
 // ObjectValueNode ...
 type ObjectValueNode struct {
-	Loc    *Location
+	node
 	Fields []ObjectFieldNode
 }
 
 // ObjectFieldNode ...
 type ObjectFieldNode struct {
-	Loc   *Location
+	node
 	Name  NameNode
 	Value ValueNode
 }
@@ -361,7 +254,7 @@ type ObjectFieldNode struct {
 
 // DirectiveNode ...
 type DirectiveNode struct {
-	Loc       *Location
+	node
 	Name      NameNode
 	Arguments *[]ArgumentNode
 }
@@ -378,19 +271,19 @@ type TypeNode interface{}
 
 // NamedTypeNode ...
 type NamedTypeNode struct {
-	Loc  *Location
+	node
 	Name NameNode
 }
 
 // ListTypeNode ...
 type ListTypeNode struct {
-	Loc  *Location
+	node
 	Type TypeNode
 }
 
 // NonNullTypeNode ...
 type NonNullTypeNode struct {
-	Loc  *Location
+	node
 	Type TypeNode
 }
 
@@ -407,14 +300,14 @@ type TypeSystemDefinitionNode interface{}
 
 // SchemaDefinitionNode ...
 type SchemaDefinitionNode struct {
-	Loc            *Location
+	node
 	Directives     []DirectiveNode
 	OperationTypes []OperationTypeDefinitionNode
 }
 
 // OperationTypeDefinitionNode ...
 type OperationTypeDefinitionNode struct {
-	Loc       *Location
+	node
 	Operation OperationTypeNode
 	Type      NamedTypeNode
 }
@@ -432,14 +325,14 @@ type TypeDefinitionNode interface{}
 
 // ScalarTypeDefinitionNode ...
 type ScalarTypeDefinitionNode struct {
-	Loc        *Location
+	node
 	Name       NameNode
 	Directives *[]DirectiveNode
 }
 
 // ObjectTypeDefinitionNode ...
 type ObjectTypeDefinitionNode struct {
-	Loc        *Location
+	node
 	Name       NameNode
 	Interfaces *[]NamedTypeNode
 	Directives *[]DirectiveNode
@@ -448,7 +341,7 @@ type ObjectTypeDefinitionNode struct {
 
 // FieldDefinitionNode ...
 type FieldDefinitionNode struct {
-	Loc        *Location
+	node
 	Name       NameNode
 	Arguments  []InputValueDefinitionNode
 	Type       TypeNode
@@ -457,7 +350,7 @@ type FieldDefinitionNode struct {
 
 // InputValueDefinitionNode ...
 type InputValueDefinitionNode struct {
-	Loc          *Location
+	node
 	Name         NameNode
 	Type         TypeNode
 	DefaultValue *ValueNode
@@ -466,7 +359,7 @@ type InputValueDefinitionNode struct {
 
 // InterfaceTypeDefinitionNode ...
 type InterfaceTypeDefinitionNode struct {
-	Loc        *Location
+	node
 	Name       NameNode
 	Directives *[]DirectiveNode
 	Fields     []FieldDefinitionNode
@@ -474,7 +367,7 @@ type InterfaceTypeDefinitionNode struct {
 
 // UnionTypeDefinitionNode ...
 type UnionTypeDefinitionNode struct {
-	Loc        *Location
+	node
 	Name       NameNode
 	Directives *[]DirectiveNode
 	Types      []NamedTypeNode
@@ -482,7 +375,7 @@ type UnionTypeDefinitionNode struct {
 
 // EnumTypeDefinitionNode ...
 type EnumTypeDefinitionNode struct {
-	Loc        *Location
+	node
 	Name       NameNode
 	Directives *[]DirectiveNode
 	Values     []EnumValueDefinitionNode
@@ -490,7 +383,7 @@ type EnumTypeDefinitionNode struct {
 
 // EnumValueDefinitionNode ...
 type EnumValueDefinitionNode struct {
-	Loc        *Location
+	node
 	Name       NameNode
 	Directives *[]DirectiveNode
 }
@@ -505,13 +398,13 @@ type InputObjectTypeDefinitionNode struct {
 
 // TypeExtensionDefinitionNode ...
 type TypeExtensionDefinitionNode struct {
-	Loc        *Location
+	node
 	Definition ObjectTypeDefinitionNode
 }
 
 // DirectiveDefinitionNode ...
 type DirectiveDefinitionNode struct {
-	Loc       *Location
+	node
 	Name      NameNode
 	Arguments *[]InputValueDefinitionNode
 	Locations []NameNode
