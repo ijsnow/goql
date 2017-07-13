@@ -213,6 +213,10 @@ func checkToken(t *testing.T, input string, want *language.Token) {
 		t.Fatalf("%v err %v", input, err)
 	}
 
+	checkExistingToken(t, input, got, want)
+}
+
+func checkExistingToken(t *testing.T, input string, got *language.Token, want *language.Token) {
 	if got.Kind != want.Kind {
 		t.Errorf("kind %v: got %v wanted %v", input, got.Kind, want.Kind)
 	}
@@ -296,6 +300,7 @@ func TestLexesStrings(t *testing.T) {
 func testErr(t *testing.T, err error, want string) {
 	if err == nil {
 		t.Errorf("expected error but got none (wanted %v)", want)
+		return
 	}
 
 	if !strings.Contains(strings.ToLower(err.Error()), strings.ToLower(want)) {
@@ -753,54 +758,89 @@ func TestLexReportsUsefulInformationForDashesInNames(t *testing.T) {
 	lexer := CreateLexer(s)
 
 	firstToken, err := lexer.Advance()
-	//     expect(firstToken).to.containSubset({
-	//       kind: TokenKind.NAME,
-	//       start: 0,
-	//       end: 1,
-	//       value: 'a'
-	//     });
-	//     expect(
-	//       () => lexer.advance()
-	//     ).to.throw(
-	//       'Syntax Error GraphQL request (1:3) Invalid number, expected digit but got: "b".'
-	//     );
-	//   });
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	want := &language.Token{
+		Kind:  language.TokenName,
+		Start: 0,
+		End:   1,
+		Value: "a",
+	}
+
+	checkExistingToken(t, q, firstToken, want)
+
+	_, err = lexer.Advance()
+	testErr(t, err, "Syntax Error GraphQL request (1:3) Invalid number, expected digit but got: \"b\".")
 }
 
-//   it('produces double linked list of tokens, including comments', () => {
-//     const lexer = createLexer(new Source(`{
-//       #comment
-//       field
-//     }`));
+func TestProducesDoubleLinkedListOfTokensIncludingComments(t *testing.T) {
+	lexer := CreateLexer(language.NewSource(`{
+  #comment
+  field
+}`))
 
-//     const startToken = lexer.token;
-//     let endToken;
-//     do {
-//       endToken = lexer.advance();
-//       // Lexer advances over ignored comment tokens to make writing parsers
-//       // easier, but will include them in the linked list result.
-//       expect(endToken.kind).not.to.equal('Comment');
-//     } while (endToken.kind !== '<EOF>');
+	startToken := lexer.Token
+	var endToken *language.Token
+	var err error
 
-//     expect(startToken.prev).to.equal(null);
-//     expect(endToken.next).to.equal(null);
+	for {
+		endToken, err = lexer.Advance()
+		if err != nil {
+			t.Fatal(err)
+		}
+		// Lexer advances over ignored comment tokens to make writing parsers
+		// easier, but will include them in the linked list result.
+		if endToken.Kind == language.TokenComment {
+			t.Errorf("expected token kind %v got %v", language.TokenComment, endToken.Kind)
+		}
+		if endToken.Kind == language.TokenEOF {
+			break
+		}
+	}
 
-//     const tokens = [];
-//     for (let tok = startToken; tok; tok = tok.next) {
-//       if (tokens.length) {
-//         // Tokens are double-linked, prev should point to last seen token.
-//         expect(tok.prev).to.equal(tokens[tokens.length - 1]);
-//       }
-//       tokens.push(tok);
-//     }
+	if startToken.Prev != nil {
+		t.Errorf("startToken.Prev should be nil but is %v", startToken.Prev)
+	}
 
-//     expect(tokens.map(tok => tok.kind)).to.deep.equal([
-//       '<SOF>',
-//       '{',
-//       'Comment',
-//       'Name',
-//       '}',
-//       '<EOF>'
-//     ]);
-//   });
-// });
+	if startToken.Next == nil {
+		t.Errorf("startToken.Next should not be nil")
+	}
+
+	if endToken.Prev == nil {
+		t.Errorf("endToken.Prev should not be nil")
+	}
+
+	if endToken.Next != nil {
+		t.Errorf("endToken.Next should be nil but is %v", endToken.Next)
+	}
+
+	tokens := make([]*language.Token, 0)
+	for tok := startToken; tok != nil; tok = tok.Next {
+		if len(tokens) > 0 {
+			// Tokens are double-linked, prev should point to last seen token.
+			if tok.Prev != tokens[len(tokens)-1] {
+				t.Error("tokens are not doubly linked, prev should point to last seen token")
+			}
+
+		}
+
+		tokens = append(tokens, tok)
+	}
+
+	kinds := []language.TokenKind{
+		language.TokenSOF,
+		language.TokenBraceLeft,
+		language.TokenComment,
+		language.TokenName,
+		language.TokenBraceRight,
+		language.TokenEOF,
+	}
+
+	for idx, tok := range tokens {
+		if tok.Kind != kinds[idx] {
+			t.Errorf("expected kind %v got %v", kinds[idx], tok.Kind)
+		}
+	}
+}

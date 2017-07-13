@@ -9,60 +9,23 @@ import (
 	"github.com/ijsnow/goql/internal/language"
 )
 
-// CreateLexer returns a Lexer for that source given a Source object
-// A Lexer is a stateful stream generator in that every time
+// Lexer is a stateful stream generator in that every time
 // it is advanced, it returns the next token in the Source. Assuming the
 // source lexes, the final Token emitted by the lexer will be of kind
 // EOF, after which the lexer will repeatedly return the same EOF token
 // whenever called.
-func CreateLexer(source language.Source) Lexer {
-	startOfFileToken := *language.NewToken(language.TokenSOF, 0, 0, 0, 0, nil, "")
-
-	return Lexer{
-		Source:    source,
-		LastToken: startOfFileToken,
-		Token:     startOfFileToken,
-		Line:      1,
-		LineStart: 0,
-	}
-}
-
-// Advance advances the lexer to the next token we are interested in
-func (l Lexer) Advance() (*language.Token, error) {
-	token := l.Token
-	l.LastToken = l.Token
-
-	for token.Kind != language.TokenEOF {
-		t, err := readToken(l, &token)
-		if err != nil {
-			return nil, err
-		}
-		token = *t
-		token.Next = t
-
-		if token.Kind != language.TokenComment {
-			break
-		}
-	}
-
-	l.Token = token
-
-	return &token, nil
-}
-
-// Lexer is the return type of createLexer
 type Lexer struct {
 	Source language.Source
 
 	/**
 	 * The previously focused non-ignored token.
 	 */
-	LastToken language.Token
+	LastToken *language.Token
 
 	/**
 	 * The currently focused non-ignored token.
 	 */
-	Token language.Token
+	Token *language.Token
 
 	/**
 	 * The (1-indexed) line containing the current token.
@@ -73,6 +36,45 @@ type Lexer struct {
 	 * The character offset at which the current line begins.
 	 */
 	LineStart int
+}
+
+// CreateLexer returns a Lexer given a language.Source
+func CreateLexer(source language.Source) *Lexer {
+	startOfFileToken := *language.NewToken(language.TokenSOF, 0, 0, 0, 0, nil, "")
+
+	return &Lexer{
+		Source:    source,
+		LastToken: &startOfFileToken,
+		Token:     &startOfFileToken,
+		Line:      1,
+		LineStart: 0,
+	}
+}
+
+// Advance advances the lexer to the next token we are interested in
+func (l *Lexer) Advance() (*language.Token, error) {
+	l.LastToken = l.Token
+	token := l.Token
+
+	if token.Kind != language.TokenEOF {
+		for {
+			nt, err := readToken(l, token)
+			if err != nil {
+				return nil, err
+			}
+
+			token.Next = nt
+			token = nt
+
+			if token.Kind != language.TokenComment {
+				break
+			}
+		}
+
+		l.Token = token
+	}
+
+	return token, nil
 }
 
 // GetTokenDesc is a helper function to describe a token as a string for debugging
@@ -91,12 +93,12 @@ func GetTokenDesc(token language.Token) string {
 // This skips over whitespace and comments until it finds the next lexable
 // token, then lexes punctuators immediately or calls the appropriate helper
 // function for more complicated tokens.
-func readToken(lexer Lexer, prev *language.Token) (*language.Token, error) {
+func readToken(lexer *Lexer, prev *language.Token) (*language.Token, error) {
 	source := lexer.Source
 	body := source.Body
 	bodyLength := len(body)
 
-	position := positionAfterWhitespace(body, prev.End, &lexer)
+	position := positionAfterWhitespace(body, prev.End, lexer)
 	line := lexer.Line
 	col := 1 + position - lexer.LineStart
 
