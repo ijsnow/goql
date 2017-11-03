@@ -10,12 +10,14 @@ import (
 // GraphQL document and/or execution result that correspond to the Error.
 type GraphQLError struct {
 
-	/* Message describing the Error for debugging purposes.
+	/**
+	 * Message describing the Error for debugging purposes.
 	 * Enumerable, and appears in the result of JSON.stringify().
 	 */
 	Message string `json:"message"`
 
-	/* Locations is an array of { line, column } locations within the source GraphQL document
+	/**
+	 * Locations is an array of { line, column } locations within the source GraphQL document
 	 * which correspond to this error.
 	 *
 	 * Errors during validation often contain multiple locations, for example to
@@ -26,7 +28,8 @@ type GraphQLError struct {
 	 */
 	Locations []language.SourceLocation `json:"locations"`
 
-	/* Path is an array describing the JSON-path into the execution response which
+	/**
+	 * Path is an array describing the JSON-path into the execution response which
 	 * corresponds to this error. Only included for errors during execution.
 	 *
 	 * Enumerable, and appears in the result of JSON.stringify().
@@ -43,12 +46,14 @@ type GraphQLError struct {
 	 */
 	Source *language.Source `json:"-"`
 
-	/* Positions is an array of character offsets within the source GraphQL document
+	/**
+	 * Positions is an array of character offsets within the source GraphQL document
 	 * which correspond to this error.
 	 */
 	Positions []int `json:"_"`
 
-	/* OriginalError the original error thrown from a field resolver during execution.
+	/**
+	 * OriginalError the original error thrown from a field resolver during execution.
 	 */
 	OriginalError error `json:"-"`
 }

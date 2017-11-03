@@ -1,4 +1,4 @@
-package language
+package query
 
 import (
 	"encoding/json"
@@ -14,21 +14,21 @@ func lexOne(str string) (*language.Token, error) {
 	return lexer.Advance()
 }
 
+func testErr(t *testing.T, err error, want string) {
+	if err == nil {
+		t.Errorf("expected error but got none (wanted %v)", want)
+		return
+	}
+
+	if !strings.Contains(strings.ToLower(err.Error()), strings.ToLower(want)) {
+		t.Errorf("wanted err to contain\n%v, got\n%v", want, err.Error())
+	}
+}
+
 func TestDisallowsUncommonControlCharacters(t *testing.T) {
 	_, err := lexOne("\u0007")
-	if err == nil {
-		t.Errorf("lexer allowed uncommon control chars %v", err)
-	}
 
-	want := `Syntax Error GraphQL request (1:1) Cannot contain the invalid character "\u0007".
-
-1: 
-   ^
-`
-
-	if err.Error() != want {
-		t.Errorf("error was formatted incorrectly\ngot: \n%vwanted: \n%v", err.Error(), want)
-	}
+	testErr(t, err, "Syntax Error GraphQL request (1:1) Cannot contain the invalid character \"\\u0007\".")
 }
 
 func TestAcceptsBOMHeader(t *testing.T) {
@@ -294,17 +294,6 @@ func TestLexesStrings(t *testing.T) {
 
 	for _, test := range set {
 		checkToken(t, test.lex, test.want)
-	}
-}
-
-func testErr(t *testing.T, err error, want string) {
-	if err == nil {
-		t.Errorf("expected error but got none (wanted %v)", want)
-		return
-	}
-
-	if !strings.Contains(strings.ToLower(err.Error()), strings.ToLower(want)) {
-		t.Errorf("wanted err to contain\n%v, got\n%v", want, err.Error())
 	}
 }
 

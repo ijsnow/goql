@@ -1,4 +1,4 @@
-package language
+package query
 
 import (
 	"fmt"
@@ -36,11 +36,32 @@ type Lexer struct {
 	 * The character offset at which the current line begins.
 	 */
 	LineStart int
+
+	options ParseOptions
+}
+
+// ParseOptions options to control parser behavior
+type ParseOptions struct {
+	/**
+	 * By default, the parser creates AST nodes that know the location
+	 * in the source that they correspond to. This configuration flag
+	 * disables that behavior for performance or testing.
+	 */
+	NoLocation bool
 }
 
 // CreateLexer returns a Lexer given a language.Source
-func CreateLexer(source language.Source) *Lexer {
+func CreateLexer(source language.Source, options ...ParseOptions) *Lexer {
 	startOfFileToken := *language.NewToken(language.TokenSOF, 0, 0, 0, 0, nil, "")
+
+	var opts ParseOptions
+	if len(options) == 0 {
+		opts = ParseOptions{
+			NoLocation: false,
+		}
+	} else {
+		opts = options[0]
+	}
 
 	return &Lexer{
 		Source:    source,
@@ -48,6 +69,7 @@ func CreateLexer(source language.Source) *Lexer {
 		Token:     &startOfFileToken,
 		Line:      1,
 		LineStart: 0,
+		options:   opts,
 	}
 }
 
@@ -77,8 +99,8 @@ func (l *Lexer) Advance() (*language.Token, error) {
 	return token, nil
 }
 
-// GetTokenDesc is a helper function to describe a token as a string for debugging
-func GetTokenDesc(token language.Token) string {
+// getTokenDesc is a helper function to describe a token as a string for debugging
+func getTokenDesc(token language.Token) string {
 	value := token.Value
 
 	if value == "" {
@@ -267,7 +289,7 @@ func printCharCode(code rune) string {
 	ucode := fmt.Sprintf(`%#U`, code)
 
 	// convert unicode format from U+XXXX to \uXXXX
-	return fmt.Sprintf(`\u%s"`, ucode[2:len(ucode)])
+	return fmt.Sprintf(`"\u%s"`, ucode[2:len(ucode)])
 }
 
 func printChar(code rune) string {
